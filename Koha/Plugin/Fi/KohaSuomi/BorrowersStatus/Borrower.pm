@@ -130,7 +130,7 @@ sub status {
                 return $c->render( status => 400, openapi => { error => 'Authentication failed for the given username and password.' } );
             }
         }
-        #Koha::Plugin::Fi::KohaSuomi::BorrowersStatus::Exceptions::Exceptions::rethrow_exception($_);
+        return $c->render( status => 400, openapi => { error => 'Authentication failed for the given username and password.' } );
     };
 }
 
