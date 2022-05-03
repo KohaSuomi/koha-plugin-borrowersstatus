@@ -65,7 +65,6 @@ sub status {
     }
 
     try {
-        $patron = Koha::Patrons->find({ userid => $username });
         $borrower = Koha::Plugin::Fi::KohaSuomi::BorrowersStatus::Challenge::Password::challenge(
                 $username,
                 $password
