@@ -63,9 +63,6 @@ my $log = Log::Log4perl->get_logger('api');
 sub challenge {
     my ($userid, $password) = @_;
     
-    $log->debug("trying challenge");
-    
-
     my $borrower;
     if (C4::Context->config('useldapserver')) {
         $borrower = Koha::Plugin::Fi::KohaSuomi::BorrowersStatus::Challenge::Password::checkLDAPPassword($userid, $password);
@@ -95,7 +92,6 @@ Checks if the given username and password match anybody in the Koha DB
 
 sub checkKohaPassword {
     
-    $log->debug("trying checkKohaPassword");
     my ($userid, $password) = @_;
     my $borrower; #Find the borrower to return
 
