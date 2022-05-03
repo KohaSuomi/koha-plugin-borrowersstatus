@@ -110,7 +110,7 @@ sub checkKohaPassword {
         }
     }
 
-    $log->warn ("Password authentication failed for the given ".( ($usernameFound) ? "password" : "username and password").".");
+    $log->warn ("Authentication failed for the given ".( ($usernameFound) ? "password" : "username and password").".");
 }
 
 sub checkHash {
