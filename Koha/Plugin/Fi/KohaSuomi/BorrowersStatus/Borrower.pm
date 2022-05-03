@@ -125,7 +125,7 @@ sub status {
         
         # KD-4344 Update the amount of failed login attempts
         if ( $patron ) {
-            $log->debug("Updating login_attempts for ". $patron->userid .".");
+            $log->debug("Updating login_attempts for ". $patron->borrowernumber .".");
             $patron->update({ login_attempts => $patron->login_attempts + 1 });
             $patron->store;
         }
