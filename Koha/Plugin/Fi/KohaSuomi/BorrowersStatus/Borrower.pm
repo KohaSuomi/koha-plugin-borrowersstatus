@@ -58,6 +58,11 @@ sub status {
     my $username = $c->validation->param('uname');
     my $password = $c->validation->param('passwd');
     my ($borrower, $error, $patron, $payload);
+    
+    if ( defined $username ){
+        $patron = Koha::Patrons->find({ cardnumber => $username });
+        $patron = Koha::Patrons->find({ userid => $username }) unless $patron;
+    }
 
     try {
         $patron = Koha::Patrons->find({ userid => $username });
@@ -118,18 +123,14 @@ sub status {
 
         return $c->render( status => 200, openapi => $payload );
     } catch {
-        if (blessed($_)){
-            if ($_->isa('Koha::Plugin::Fi::KohaSuomi::BorrowersStatus::Exceptions::Exception::LoginFailed')) {
-                # KD-4344 Update the amount of failed login attempts
-                if ( $patron ) {
-                    $patron->update({ login_attempts => $patron->login_attempts + 1 });
-                    $patron->store;
-                }
-                # KD-4344 Generic error message instead of $_->error so as not to reveal anything about our user ids.
-                #$log->debug("Request failed");
-                return $c->render( status => 400, openapi => { error => 'Authentication failed for the given username and password.' } );
-            }
+        
+        # KD-4344 Update the amount of failed login attempts
+        if ( $patron ) {
+            $log->debug("Updating login_attempts for ". $patron->userid .".");
+            $patron->update({ login_attempts => $patron->login_attempts + 1 });
+            $patron->store;
         }
+        # KD-4344 Generic error message instead of $_->error so as not to reveal anything about our user ids.
         return $c->render( status => 400, openapi => { error => 'Authentication failed for the given username and password.' } );
     };
 }
