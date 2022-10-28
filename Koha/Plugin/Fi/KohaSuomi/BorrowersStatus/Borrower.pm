@@ -33,6 +33,7 @@ use Scalar::Util qw( blessed );
 use Try::Tiny;
 use Data::Printer;
 use File::Basename;
+use POSIX qw(strftime);
 
 #from Members.pm
 our (@ISA,@EXPORT,@EXPORT_OK,$debug);
@@ -58,6 +59,7 @@ sub status {
     my $username = $c->validation->param('uname');
     my $password = $c->validation->param('passwd');
     my ($borrower, $error, $patron, $payload);
+    my $lastseen = strftime "%Y-%m-%d %H:%M:%S", localtime;
     
     if ( defined $username ){
         $patron = Koha::Patrons->find({ cardnumber => $username });
@@ -117,6 +119,7 @@ sub status {
         # KD-4344 Reset failed login attempts on succesfull login
         if ( $patron ) {
             $patron->update({ login_attempts => 0 });
+            $patron->update({ lastseen => $lastseen });
             $patron->store;
         }
 
