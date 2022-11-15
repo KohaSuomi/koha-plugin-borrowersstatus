@@ -65,6 +65,19 @@ sub status {
         $patron = Koha::Patrons->find({ cardnumber => $username });
         $patron = Koha::Patrons->find({ userid => $username }) unless $patron;
     }
+    
+    if (!$patron) {
+        return $c->render( status => 400, openapi => { error => 'Authentication failed for the given username and password.' } );
+    }
+    
+    if ($patron->account_locked) {
+        $patron->update({ login_attempts => $patron->login_attempts + 1 });
+        $patron->store;
+        return $c->render(
+            status => 401, 
+            openapi => { error => "Login failed." }
+        );
+    }        
 
     try {
         $borrower = Koha::Plugin::Fi::KohaSuomi::BorrowersStatus::Challenge::Password::challenge(
