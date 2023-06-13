@@ -109,7 +109,7 @@ sub status {
             cardnumber     => $borrower->cardnumber || '',
             surname        => $borrower->surname || '',
             firstname      => $borrower->firstname || '',
-            age            =>  $borrower->get_age || '',
+            age            =>  $borrower->get_age || 0,
             email            =>  $borrower->email || '',
             homebranch     => $borrower->branchcode || '',
             fines          => $fines_amount+0,
