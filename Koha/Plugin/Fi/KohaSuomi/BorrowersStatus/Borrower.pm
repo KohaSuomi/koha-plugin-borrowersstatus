@@ -31,7 +31,6 @@ use Koha::Plugin::Fi::KohaSuomi::BorrowersStatus::Exceptions::Exception;
 
 use Scalar::Util qw( blessed );
 use Try::Tiny;
-use Data::Printer;
 use File::Basename;
 use POSIX qw(strftime);
 
