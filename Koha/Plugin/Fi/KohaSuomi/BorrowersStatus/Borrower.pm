@@ -50,8 +50,7 @@ my $CONFPATH = dirname($ENV{'KOHA_CONF'});
 # Initialize Logger
 my $log_conf = $CONFPATH . "/log4perl.conf";
 Log::Log4perl::init($log_conf);
-my $log = Log::Log4perl->get_logger('api');
-$log->debug("Received borrowers/status request");
+my $log = Log::Log4perl->get_logger('auth');
 sub status {
     my $c = shift->openapi->valid_input or return;
 
@@ -66,6 +65,7 @@ sub status {
     }
     
     if (!$patron) {
+        $log->error("Patron not found for username: '$username'.");
         return $c->render( status => 400, openapi => { error => 'Authentication failed for the given username and password.' } );
     }
     
@@ -140,7 +140,7 @@ sub status {
         
         # KD-4344 Update the amount of failed login attempts
         if ( $patron ) {
-            $log->debug("Updating login_attempts for ". $patron->borrowernumber .".");
+            $log->error("Updating login_attempts for patron_id: ". $patron->borrowernumber .".");
             $patron->update({ login_attempts => $patron->login_attempts + 1 });
             $patron->store;
         }
