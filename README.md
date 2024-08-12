@@ -16,5 +16,20 @@ To set up the Koha plugin system you must first make some changes to your instal
     </Directory>
     Restart your webserver
 Once set up is complete you will need to alter your UseKohaPlugins system preference. On the Tools page you will see the Tools Plugins and on the Reports page you will see the Reports Plugins.
-# Configuring
-Here is the place for configurations
+# Logging
+
+Add settings to log4perl.conf and create the file to desired `<path>`
+
+```
+log4perl.logger.auth = ERROR, AUTH
+log4perl.appender.AUTH=Log::Log4perl::Appender::File
+log4perl.appender.AUTH.filename=<path>/auth-failures.log
+log4perl.appender.AUTH.mode=append
+log4perl.appender.AUTH.create_at_logtime=true
+log4perl.appender.AUTH.layout=PatternLayout
+log4perl.appender.AUTH.layout.ConversionPattern=[%d] [%p] %m
+log4perl.appender.AUTH.utf8=1
+log4perl.appender.AUTH.umask=0007
+log4perl.appender.AUTH.owner=www-data
+log4perl.appender.AUTH.group=www-data
+```
