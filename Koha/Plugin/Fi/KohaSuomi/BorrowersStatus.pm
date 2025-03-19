@@ -10,14 +10,14 @@ use utf8;
 our $VERSION = "1.0.0";
 ## Here is our metadata, some keys are required, some are optional
 our $metadata = {
-    name            => 'borrowers/status endpoint',
+    name            => 'API: borrowers/status endpoint',
     author          => 'Lari Strand',
     date_authored   => '2022-04-25',
     date_updated    => '2022-04-25',
     minimum_version => '21.05',
     maximum_version => '',
     version         => $VERSION,
-    description     => 'Adds borrowers/status authentication endpoint to Koha-Suomi REST API',
+    description     => 'Adds borrowers/status authentication endpoint to Koha-Suomi REST API. (Paikalliskannat)',
 };
 ## This is the minimum code required for a plugin's 'new' method
 ## More can be added, but none should be removed
