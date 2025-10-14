@@ -108,8 +108,8 @@ sub status {
             cardnumber     => $borrower->cardnumber || '',
             surname        => $borrower->surname || '',
             firstname      => $borrower->firstname || '',
-            age            =>  $borrower->get_age || 0,
-            email            =>  $borrower->email || '',
+            age            => $borrower->get_age || 0,
+            email          => $borrower->email || '',
             homebranch     => $borrower->branchcode || '',
             fines          => $fines_amount+0,
             language       => 'fin' || '',
@@ -118,14 +118,7 @@ sub status {
             recall_privileges_denied    => _bool(!$basic_privileges_ok),
             hold_privileges_denied      => _bool(!$basic_privileges_ok),
             card_reported_lost          => _bool($card_lost),
-            too_many_items_charged      => _bool(0),
-            too_many_items_overdue      => _bool(0),
-            too_many_renewals           => _bool(0),
-            too_many_claims_of_items_returned => _bool(0),
-            too_many_items_lost         => _bool(0),
-            excessive_outstanding_fines => _bool($fine_blocked),
-            recall_overdue              => _bool(0),
-            too_many_items_billed       => _bool(0),
+            excessive_outstanding_fines => _bool($fine_blocked)
         };
 
         # KD-4344 Reset failed login attempts on succesfull login
