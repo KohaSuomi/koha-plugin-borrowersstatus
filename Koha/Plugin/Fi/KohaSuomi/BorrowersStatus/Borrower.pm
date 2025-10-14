@@ -112,7 +112,7 @@ sub status {
             email          => $borrower->email || '',
             homebranch     => $borrower->branchcode || '',
             fines          => $fines_amount+0,
-            language       => 'fin' || '',
+            language       => $borrower->lang || '',
             charge_privileges_denied    => _bool(!$basic_privileges_ok),
             renewal_privileges_denied   => _bool(!$basic_privileges_ok),
             recall_privileges_denied    => _bool(!$basic_privileges_ok),
