@@ -53,8 +53,8 @@ sub new {
     my $self = $class->SUPER::new($args);
 
     my ($name, $description) = $self->get_localized_metadata();
-    $self->metadata->{name} = $name;
-    $self->metadata->{description} = $description;
+    $self->{metadata}->{name} = $name;
+    $self->{metadata}->{description} = $description;
 
     return $self;
 }
