@@ -31,8 +31,8 @@ sub get_localized_metadata {
         $name = "API: borrowers/status endpoint";
         $description = "Lägger till borrowers/status autentiseringsendpoint i Koha-Suomi REST API. (Lokala databaser)";
     } elsif ( $lang eq 'fi-FI' ) {
-        $name = "API: borrowers/status rajapinta";
-        $description = "Lisää borrowers/status autentikaatiorajapinnan Koha-Suomi REST API:in. (Paikalliskannat)";
+        $name = "API: borrowers/status-rajapinta";
+        $description = "Lisää borrowers/status-autentikaatiorajapinnan Koha-Suomi REST API:in. (Paikalliskannat)";
     } else {
         $name = "API: borrowers/status endpoint";
         $description = "Adds borrowers/status authentication endpoint to Koha-Suomi REST API. (Local databases)";
