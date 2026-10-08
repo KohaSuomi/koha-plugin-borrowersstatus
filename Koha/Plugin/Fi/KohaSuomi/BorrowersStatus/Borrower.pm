@@ -68,17 +68,9 @@ sub status {
         $log->error("Patron not found for username: '$username'.");
         return $c->render( status => 400, openapi => { error => 'Authentication failed for the given username and password.' } );
     }
-    
-    if ($patron->account_locked) {
-        $patron->update({ login_attempts => $patron->login_attempts + 1 });
-        $patron->store;
-        return $c->render(
-            status => 401, 
-            openapi => { error => "Login failed." }
-        );
-    }        
 
     try {
+        die "Account locked" if $patron->account_locked;
         $borrower = Koha::Plugin::Fi::KohaSuomi::BorrowersStatus::Challenge::Password::challenge(
                 $username,
                 $password
@@ -133,6 +125,9 @@ sub status {
         
         # KD-4344 Update the amount of failed login attempts
         if ( $patron ) {
+            if ($_ =~ /Account locked/) {
+                $log->error("Account locked for patron_id: ". $patron->borrowernumber .".");
+            }
             $log->error("Updating login_attempts for patron_id: ". $patron->borrowernumber .".");
             $patron->update({ login_attempts => $patron->login_attempts + 1 });
             $patron->store;
